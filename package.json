@@ -1,0 +1,54 @@
+{
+  "name": "twitch_fighter",
+  "version": "1.0.0",
+  "description": "Build Platform for TwitchFighter",
+  "license": "UNLICENSED",
+  "repository": "convoytom/twitchfighter",
+  "scripts": {
+    "clean": "./scripts/clean.sh",
+    "compile": "./scripts/compile.sh"
+  },
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "lodash": "^4.17.10",
+    "moment": "~2.22.1",
+    "moment-timezone": "~0.5.17",
+    "uuid": "~3.3.2",
+    "yargs": "~11.0.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.3",
+    "@types/chai-as-promised": "^7.1.0",
+    "@types/lodash": "^4.14.109",
+    "@types/mocha": "^5.2.0",
+    "@types/moment": "~2.13.0",
+    "@types/moment-timezone": "~0.5.4",
+    "@types/node": "^10.1.2",
+    "@types/sinon": "^4.3.3",
+    "@types/sinon-as-promised": "^4.0.6",
+    "@types/sinon-chai": "^2.7.31",
+    "@types/yargs": "~11.0.0",
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "husky": ">=1",
+    "lint-staged": ">=8",
+    "mocha": "^7.0.0",
+    "prettier": "~1.12.1",
+    "sinon": "^5.0.7",
+    "sinon-as-promised": "^4.0.3",
+    "sinon-chai": "^3.0.0",
+    "ts-node": "8.6.1",
+    "tslint": "^5.10.0",
+    "tslint-config-prettier": "^1.13.0",
+    "tslint-no-unused-expression-chai": "^0.1.3",
+    "typescript": "3.7.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,css,json,md}": ["prettier --write", "git add"]
+  }
+}
