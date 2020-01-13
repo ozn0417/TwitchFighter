@@ -16,11 +16,11 @@ npm install -g yarn@$(cat .yarn-version)
 nvm install 10.13.0
 nvm use
 yarn
-yarn compile
 ```
 
 ## How to run
 
 ```
+yarn compile
 node dist/hello_world.js
 ```
