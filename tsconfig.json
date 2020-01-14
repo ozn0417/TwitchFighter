@@ -14,7 +14,9 @@
     "sourceMap": true,
     "inlineSources": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   },
   "exclude": ["node_modules", "types/node_modules", "scripts"]
 }
