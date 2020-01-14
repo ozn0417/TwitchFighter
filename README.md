@@ -4,6 +4,10 @@ Feel-Good online gambling site for everything related to Street Fighter fights
 
 ## Getting Started
 
+Install node.js
+Install homebrew
+Install npm
+
 ```
 npm -v
 npm install -g npm@6.13.4
