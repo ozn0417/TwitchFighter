@@ -10,7 +10,7 @@
   "scripts": {
     "clean": "./scripts/clean.sh",
     "compile": "./scripts/compile.sh",
-    "start": "./scripts/start.sh"
+    "start": "node dist/hello_world.js"
   },
   "dependencies": {
     "fs": "^0.0.1-security",

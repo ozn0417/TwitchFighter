@@ -26,7 +26,7 @@ yarn
 
 ```
 yarn compile
-node dist/hello_world.js
+yarn start
 ```
 
 point your browser to localhost:3000
