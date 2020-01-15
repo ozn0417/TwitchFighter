@@ -1,22 +1,26 @@
 {
+  "compileOnSave": false,
   "compilerOptions": {
-    "charset": "utf-8",
-    "declaration": false,
-    "forceConsistentCasingInFileNames": true,
-    "module": "commonjs",
-    "newLine": "LF",
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitAny": true,
-    "outDir": "dist",
-    "pretty": true,
-    "target": "es2016",
-    "lib": ["es2016", "dom"],
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
     "sourceMap": true,
-    "inlineSources": true,
-    "emitDecoratorMetadata": true,
+    "declaration": false,
+    "downlevelIteration": true,
     "experimentalDecorators": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true
+    "module": "esnext",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2015",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2018",
+      "dom"
+    ]
   },
-  "exclude": ["node_modules", "types/node_modules", "scripts"]
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
+  }
 }
