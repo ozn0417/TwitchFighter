@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import * as mongoose from 'mongoose';
 
 /**
  * @swagger
@@ -14,12 +14,12 @@ import mongoose, { Schema, Document } from 'mongoose';
  *         type: string
  *         example: 'https://twitch.com/s/myTwitchName'
  */
-export interface Stream extends Document {
+export interface Stream extends mongoose.Document {
     twitchUserName: string;
     streamUrl: string;
 }
 
-const StreamSchema: Schema = new Schema({
+const StreamSchema: mongoose.Schema = new mongoose.Schema({
     twitchUserName: { type: String, required: true },
     streamUrl: { type: String, required: true}
 });
