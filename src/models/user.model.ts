@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import * as mongoose from 'mongoose';
 
 /**
  * @swagger
@@ -23,14 +23,14 @@ import mongoose, { Schema, Document } from 'mongoose';
  *          type: string
  *          example: b91186b4-f2f6-45b3-b67f-b12e47b85198
  */
-export interface User extends Document {
+export interface User extends mongoose.Document {
     firstName: string;
     lastName: string;
     email: string;
     twitchUsername: string;
 }
 
-const UserSchema: Schema = new Schema({
+const UserSchema: mongoose.Schema = new mongoose.Schema({
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     email: { type: String, required: true, unique: true },
