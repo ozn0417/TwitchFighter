@@ -28,7 +28,6 @@ export interface User extends Document {
     lastName: string;
     email: string;
     twitchUsername: string;
-    userId: string;
 }
 
 const UserSchema: Schema = new Schema({
@@ -36,7 +35,6 @@ const UserSchema: Schema = new Schema({
     lastName: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     twitchUsername: { type: String, required: true, unique: true },
-    userId: { type: String, required: true, unique: true },
 });
 
 export default mongoose.model<User>('User', UserSchema, 'users');
