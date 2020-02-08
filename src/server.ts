@@ -1,11 +1,17 @@
 import * as express from "express";
 import * as mongoose from "mongoose";
 
+import { RegisterControllers } from "./registerControllers";
+
 let app = express();
 const port = 8080; // default port to listen
 
 
 const mongoDbUrl = process.env.CUSTOMCONNSTR_mongoDbConnStr || 'mongodb://localhost:27017/twitchFighter';
+
+
+
+const registeredControllers = new RegisterControllers(app);
 
 
 // start the Express server
