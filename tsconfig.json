@@ -1,16 +1,17 @@
 {
     "compileOnSave": false,
     "compilerOptions": {
-        "baseUrl": "./",
-        "outDir": "./dist",
+        "baseUrl": ".",
+        "outDir": "dist",
         "sourceMap": true,
         "declaration": false,
         "downlevelIteration": true,
         "experimentalDecorators": true,
-        "module": "esnext",
+        "module": "commonjs",
         "moduleResolution": "node",
         "importHelpers": true,
         "allowSyntheticDefaultImports": true,
+        "resolveJsonModule": true,
         "target": "es6",
         "typeRoots": [
             "node_modules/@types"
