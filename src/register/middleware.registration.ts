@@ -8,5 +8,5 @@ export function RegisterMiddleware(app: express.Express) {
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
 
-    app.use('/twitchfighter-api', swaggerUi.serve, swaggerUi.setup(jsConfig));
-} 
+    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(jsConfig));
+}

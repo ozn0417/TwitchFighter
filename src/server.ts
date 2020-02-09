@@ -25,5 +25,4 @@ app.listen(port, async () => {
     const collections = await mongoose.connection.db.collections();
     collections.forEach(c => console.log(`Found: ${c.collectionName}`));
     console.log(`server is ready to use at http://localhost:${port}`);
-  });
-  
+});
