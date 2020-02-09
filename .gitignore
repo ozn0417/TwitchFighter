@@ -45,6 +45,3 @@ testem.log
 .DS_Store
 Thumbs.db
 
-# temporarily add src/*.js
-/src/*.js
-/src/*/*.js
