@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "ng": "ng",
-    "prebuild": "npm run buildswag",
+    "prebuild": "tsc --outDir dist src/server.ts && node dist/server.js",
     "build": "tsc",
     "buildswag": "swagger-jsdoc -d swaggerDef.js -o src/swagger.json",
     "prestart": "npm run build",
