@@ -12,7 +12,6 @@
     "module": "esnext",
     "moduleResolution": "node",
     "importHelpers": true,
-    "allowSyntheticDefaultImports": true,
     "target": "es6",
     "typeRoots": [
       "node_modules/@types"
