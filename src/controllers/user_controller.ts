@@ -65,7 +65,7 @@ export class UserController implements ControllerRouter {
      *           schema:
      *             $ref: '#/definitions/User'
      */
-    async createUser(req: express.Request, res: express.Response, next: express.NextFunction) {
+    async createUser(req: express.Request, res: express.Response) {
         const user: UserInterface = req.body;
         try {
             const result: UserInterface[] = await User.create([user]);

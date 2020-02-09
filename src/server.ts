@@ -1,18 +1,18 @@
-import * as express from "express";
-import * as mongoose from "mongoose";
+import * as express from 'express';
+import * as mongoose from 'mongoose';
+import * as bodyParser from 'body-parser';
+import { RegisterControllers } from './registerControllers';
 
-import { RegisterControllers } from "./registerControllers";
-
-let app = express();
+const app = express();
 const port = 8080; // default port to listen
 
 
 const mongoDbUrl = process.env.CUSTOMCONNSTR_mongoDbConnStr || 'mongodb://localhost:27017/twitchFighter';
 
-
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 const registeredControllers = new RegisterControllers(app);
-
 
 // start the Express server
 app.listen(port, async () => {
