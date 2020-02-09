@@ -75,6 +75,34 @@ export class StreamController implements ControllerRouter {
             console.error(`Failed to create user ${e}`);
         }
     }
+
+    /**
+     * @swagger
+     *
+     * /user/{id}:
+     *   patch:
+     *     description: Update an existing stream
+     *     produces:
+     *       - application/json
+     *     parameters:
+     *       - in: body
+     *         name: stream
+     *         description: stream object
+     *         required: true
+     *         schema:
+     *           $ref: '#/definitions/Stream'
+     *       - in: path
+     *         name: id
+     *         description: Stream URL
+     *         required: true
+     *         schema:
+     *           type: string
+     *     responses:
+     *       200:
+     *         response:
+     *           schema:
+     *             $ref: '#/definitions/Stream'
+     */
     async updateStream(req: express.Request, res: express.Response, next: express.NextFunction){
         const id: string = req.params.id;
         const newInfo: StreamInterface = req.body;
