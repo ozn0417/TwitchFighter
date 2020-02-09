@@ -74,6 +74,22 @@
       }
     },
     "/bets": {
+      "get": {
+        "description": "Get all bests in DB",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "response": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Bets"
+              }
+            }
+          }
+        }
+      },
       "post": {
         "description": "Create a new bet",
         "produces": [
@@ -96,6 +112,100 @@
             "response": {
               "schema": {
                 "$ref": "#/definitions/Bets"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bets/{id}": {
+      "patch": {
+        "description": "Update an existing Bet result",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "description": "User object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "description": "User ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "response": {
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete user bet id",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "User ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "response": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stream": {
+      "get": {
+        "description": "creates a stream object",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "streamURL",
+            "description": "Stream object",
+            "required": true,
+            "type": "string",
+            "schema": {
+              "$ref": "#/definitions/Stream"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "response": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Stream"
               }
             }
           }
@@ -160,36 +270,6 @@
               "type": "array",
               "items": {
                 "$ref": "#/definitions/User"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/stream": {
-      "get": {
-        "description": "creates a stream object",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "streamURL",
-            "description": "Stream object",
-            "required": true,
-            "type": "string",
-            "schema": {
-              "$ref": "#/definitions/Stream"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "response": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Stream"
               }
             }
           }
