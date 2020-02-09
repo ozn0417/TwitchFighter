@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "tsc src/server.ts && node src/server.js",
+    "start": "tsc --outDir dist src/server.ts && node dist/server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
