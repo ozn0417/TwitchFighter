@@ -6,13 +6,14 @@ export class BetsController implements ControllerRouter {
     public router = express.Router();
     public route = '/bets';
 
-    /** constructor() {
+    constructor() {
         this.initializeRoutes();
     }
 
     initializeRoutes() {
         this.router.get('/:userId/:matchId', this.getUserMatchBets);
         this.router.get('/:userId', this.getAllUserBets);
+        this.router.get('/', this.getAllBets);
         this.router.post('/', this.createBet);
         this.router.patch('/:id', this.updateBetsResult);
         this.router.delete('/:id', this.deleteBet)
@@ -45,18 +46,23 @@ export class BetsController implements ControllerRouter {
      *           items:
      *              $ref: '#/definitions/Bets'
      */
-    /**async getUserMatchBets(req: express.Request, res: express.Response, next: express.NextFunction) {
+    async getUserMatchBets(req: express.Request, res: express.Response, next: express.NextFunction) {
         const userId: string = req.params.userId;
         const matchId: string = req.params.matchId;
         try {
-            const match = await User.find();
-            res.json(users);
+            const match = await Bets.find(
+                {
+                    userId,
+                    matchId,
+                }
+            );
+            res.json(match);
         }
         catch (error) {
             const e = JSON.stringify(error);
             console.error(`Failed to get users ${e}`);
         }
-    }*/
+    }
 
     /**
      * @swagger
@@ -80,7 +86,7 @@ export class BetsController implements ControllerRouter {
      *           items:
      *              $ref: '#/definitions/Bets'
      */
-    /**async getAllUserBets(req: express.Request, res: express.Response, next: express.NextFunction) {
+    async getAllUserBets(req: express.Request, res: express.Response, next: express.NextFunction) {
         const userId = req.params.userId;
         try {
             const bets = await Bets.find({
@@ -91,7 +97,33 @@ export class BetsController implements ControllerRouter {
             const e = JSON.stringify(error);
             console.error(`Failed to get users ${e}`);
         }
-    }*/
+    }
+
+    /**
+     * @swagger
+     *
+     * /bets:
+     *   get:
+     *     description: Get all bests in DB
+     *     produces:
+     *       - application/json
+     *     responses:
+     *       200:
+     *         response:
+     *           type: array
+     *           items:
+     *              $ref: '#/definitions/Bets'
+     */
+    async getAllBets(req: express.Request, res: express.Response, next: express.NextFunction) {
+        try {
+            const bets = await Bets.find();
+            res.json(bets);
+        }
+        catch (error) {
+            const e = JSON.stringify(error);
+            console.error(`Failed to get users ${e}`);
+        }
+    }
 
     /**
      * @swagger
@@ -115,24 +147,25 @@ export class BetsController implements ControllerRouter {
      *           schema:
      *             $ref: '#/definitions/Bets'
      */
-    /**async createBet(req: express.Request, res: express.Response, next: express.NextFunction) {
-        const user: UserInterface = req.body;
+    async createBet(req: express.Request, res: express.Response, next: express.NextFunction) {
+        const bet: BetsInterface = req.body;
+        console.log(bet);
         try {
-            const result: UserInterface[] = await User.create([user]);
+            const result: BetsInterface[] = await Bets.create([bet]);
             res.json(result);
         }
         catch (error) {
             const e = JSON.stringify(error);
             console.error(`Failed to create user ${e}`);
         }
-    }*/
+    }
 
     /**
      * @swagger
      *
-     * /user/{id}:
+     * /bets/{id}:
      *   patch:
-     *     description: Update an existing User
+     *     description: Update an existing Bet result
      *     produces:
      *       - application/json
      *     parameters:
@@ -154,31 +187,28 @@ export class BetsController implements ControllerRouter {
      *           schema:
      *             $ref: '#/definitions/User'
      */
-    /**async updateBetsResult(req: express.Request, res: express.Response, next: express.NextFunction) {
+    async updateBetsResult(req: express.Request, res: express.Response, next: express.NextFunction) {
         const id: string = req.params.id;
-        const newInfo: UserInterface = req.body;
+        const newInfo: BetsInterface = req.body;
         try {
-            const oldUser = await User.findById(id);
+            const oldBet = await Bets.findById(id);
+            await oldBet.updateOne({$set: newInfo});
 
-            // remember to use $set!!
-            await oldUser.updateOne({$set: newInfo});
-
-            // findByIdAndUpdate will give you the old record
-            const newUser = await User.findById(id);
-            res.json(newUser);
+            const newBet = await Bets.findById(id);
+            res.json(newBet);
         }
         catch (error) {
             const e = JSON.stringify(error);
             next(console.error(`Failed to update user ${e}`));
         }
-    }*/
+    }
 
     /**
      * @swagger
      *
-     * /user/{id}:
+     * /bets/{id}:
      *   delete:
-     *     description: Delete user bt id
+     *     description: Delete user bet id
      *     produces:
      *       - application/json
      *     parameters:
@@ -195,15 +225,15 @@ export class BetsController implements ControllerRouter {
      *           items:
      *              $ref: '#/definitions/User'
      */
-    /**async deleteBet(req: express.Request, res: express.Response, next: express.NextFunction) {
+    async deleteBet(req: express.Request, res: express.Response, next: express.NextFunction) {
         const id: string = req.params.id;
         try {
-            await User.findByIdAndDelete(id);
+            await Bets.findByIdAndDelete(id);
             res.status(204).send();
         }
         catch (error) {
             const e = JSON.stringify(error);
             next(console.error(`Failed to update user ${e}`));
         }
-    }*/
+    }
 }

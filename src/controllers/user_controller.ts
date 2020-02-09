@@ -32,7 +32,7 @@ export class UserController implements ControllerRouter {
      *           items:
      *              $ref: '#/definitions/User'
      */
-    async getUsers(req: express.Request, res: express.Response, next: express.NextFunction) {
+    async getUsers(req: express.Request, res: express.Response) {
         try {
             const users = await User.find();
             res.json(users);
@@ -65,7 +65,7 @@ export class UserController implements ControllerRouter {
      *           schema:
      *             $ref: '#/definitions/User'
      */
-    async createUser(req: express.Request, res: express.Response, next: express.NextFunction) {
+    async createUser(req: express.Request, res: express.Response) {
         const user: UserInterface = req.body;
         try {
             const result: UserInterface[] = await User.create([user]);
