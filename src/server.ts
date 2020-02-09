@@ -3,7 +3,7 @@ import * as mongoose from "mongoose";
 
 import { RegisterControllers } from "./registerControllers";
 
-let app = express();
+const app = express();
 const port = 8080; // default port to listen
 
 
@@ -18,7 +18,7 @@ const registeredControllers = new RegisterControllers(app);
 app.listen(port, async () => {
     const options: mongoose.ConnectionOptions = {
       useNewUrlParser: true,
-    }
+    };
     await mongoose.connect(mongoDbUrl, options);
     const collections = await mongoose.connection.db.collections();
     collections.forEach(c => console.log(`Found: ${c.collectionName}`));
