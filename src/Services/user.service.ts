@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { User } from 'src/models/user.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -12,9 +11,4 @@ export class UserService {
   constructor(
     private http: HttpClient
     ) { }
-
-  getUsers(): Observable<User[]> {
-    const url = `${this.baseUrl}`;
-    return this.http.get<User[]>(url);
-  }
 }
