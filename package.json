@@ -1,12 +1,18 @@
 {
-  "name": "app",
-  "version": "0.0.0",
+  "name": "TwitchFighter",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "tsc src/server.ts && node src/server.js",
-    "build": "ng build",
+    "prebuild": "npm run buildswag",
+    "build": "tsc",
+    "buildswag": "swagger-jsdoc -d swaggerDef.js -o src/swagger.json",
+    "prestart": "npm run build",
+    "start": "node src/server.js",
+    "buildAngular": "ng build",
+    "startAngular": "ng serve",
     "test": "ng test",
     "lint": "ng lint",
+    "tslint": "tslint -c tslint.json -p tsconfig.json --fix",
     "e2e": "ng e2e"
   },
   "private": true,

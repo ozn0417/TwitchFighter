@@ -18,7 +18,7 @@ const registeredControllers = new RegisterControllers(app);
 app.listen(port, async () => {
     const options: mongoose.ConnectionOptions = {
       useNewUrlParser: true,
-    }
+    };
     await mongoose.connect(mongoDbUrl, options);
     const collections = await mongoose.connection.db.collections();
     collections.forEach(c => console.log(`Found: ${c.collectionName}`));
