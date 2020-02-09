@@ -1,5 +1,5 @@
-import * as express from "express";
-import * as mongoose from "mongoose";
+import express from "express";
+import mongoose from "mongoose";
 
 import { RegisterControllers } from "./registerControllers";
 

@@ -1,4 +1,4 @@
-import * as express from 'express';
+import express from 'express';
 import { ControllerRouter } from './controller_router';
 import Bets, { Bets as BetsInterface } from '../models/bets.model';
 
