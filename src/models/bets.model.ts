@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import * as mongoose from 'mongoose';
 import { User } from './user.model';
 import { Stream } from './stream.model';
 
@@ -29,7 +29,7 @@ import { Stream } from './stream.model';
  *          example: 'win'
  */
 
-export interface Bet extends Document {
+export interface Bets extends mongoose.Document {
     userId: User['_id'], // mongo id to string from users coll to string
     streamId: Stream['_id'], // mongo id to string from streams coll to string
     matchId: string, // mongo id to string from match coll to string
@@ -39,8 +39,8 @@ export interface Bet extends Document {
     betResult: string
 }
 
-const BetSchema: Schema = new Schema({
-    userId: { type: Schema.Types.ObjectId, required: true },
+const BetsSchema: mongoose.Schema = new mongoose.Schema({
+    userId: { type: String, required: true },
     streamId: { type: String, required: true },
     matchId: { type: String, required: true, unique: false },
     dateTime: { type: Date, default: Date.now },
@@ -49,4 +49,4 @@ const BetSchema: Schema = new Schema({
     betResult: { type: String, required: true, unique: false },
 });
 
-export default mongoose.model<Bet>('Bet', BetSchema, 'bets');
+export default mongoose.model<Bets>('Bets', BetsSchema, 'bets');
