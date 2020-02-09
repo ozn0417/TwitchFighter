@@ -2,6 +2,7 @@ import * as express from 'express';
 import * as mongoose from 'mongoose';
 import * as bodyParser from 'body-parser';
 import { RegisterControllers } from './registerControllers';
+import { RegisterMiddleware } from './register/middleware.registration';
 
 const app = express();
 const port = 8080; // default port to listen
@@ -13,6 +14,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 const registeredControllers = new RegisterControllers(app);
+RegisterMiddleware(app);
 
 // start the Express server
 app.listen(port, async () => {
