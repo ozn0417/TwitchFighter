@@ -13,6 +13,9 @@ export class BetsController implements ControllerRouter {
     initializeRoutes() {
         this.router.get('/stream/:streamId', this.getStreamBets);
         this.router.get('/:userId', this.getAllUserBets);
+        this.router.get('/totalStats/:userId', this.getTotalStatsUserBets);
+        this.router.get('/totalWon/:userId', this.getTotalWonUserBets);
+        this.router.get('/totalLost/:userId', this.getTotalLostUserBets);
         this.router.get('/', this.getAllBets);
         this.router.post('/', this.createBet);
         this.router.patch('/:id', this.updateBetsResult);
@@ -84,12 +87,153 @@ export class BetsController implements ControllerRouter {
      */
     async getAllUserBets(req: express.Request, res: express.Response, next: express.NextFunction) {
         const userId = req.params.userId;
-        console.log(userId);
         try {
             const query = Bets.find();
             query.where('userId').equals(userId);
             const bets = await query.exec();
             res.json(bets);
+        }
+        catch (error) {
+            const e = JSON.stringify(error);
+            console.error(`Failed to get users ${e}`);
+        }
+    }
+
+    /**
+     * @swagger
+     *
+     * /bets/totalStats/{userId}:
+     *   get:
+     *     description: Get sum statistics of user bets
+     *     produces:
+     *       - application/json
+     *     parameters:
+     *       - in: path
+     *         name: userId
+     *         description: User ID
+     *         required: true
+     *         schema:
+     *           type: string
+     *     responses:
+     *       200:
+     *         response:
+     *           type: array
+     *           items:
+     *              $ref: '#/definitions/Bets'
+     */
+    async getTotalStatsUserBets(req: express.Request, res: express.Response, next: express.NextFunction) {
+        const userId = req.params.userId;
+        try {
+            const result = await Bets.aggregate([
+                {
+                    $match: {
+                        userId,
+                    }
+                }, {
+                    $group: {
+                        _id: userId,
+                        totalBet: { $sum: "$betAmount" },
+                        avgBet: { $avg: "$betAmount" },
+                        minBet: { $min: "$betAmount" },
+                        maxBet: { $max: "$betAmount" }
+                    }
+                }
+            ]);
+            res.json(result);
+        }
+        catch (error) {
+            const e = JSON.stringify(error);
+            console.error(`Failed to get users ${e}`);
+        }
+    }
+
+    /**
+     * @swagger
+     *
+     * /bets/totalWon/{userId}:
+     *   get:
+     *     description: Get total winning of user bets
+     *     produces:
+     *       - application/json
+     *     parameters:
+     *       - in: path
+     *         name: userId
+     *         description: User ID
+     *         required: true
+     *         schema:
+     *           type: string
+     *     responses:
+     *       200:
+     *         response:
+     *           type: array
+     *           items:
+     *              $ref: '#/definitions/Bets'
+     */
+    async getTotalWonUserBets(req: express.Request, res: express.Response, next: express.NextFunction) {
+        const userId = req.params.userId;
+        try {
+            const result = await Bets.aggregate([
+                {
+                    $match: {
+                        userId,
+                        betResult: "Win",
+                    }
+                }, {
+                    $group: {
+                        _id: userId,
+                        totalBet: { $sum: "$betAmount" },
+                        totalWon: { $sum: 1 }
+                    }
+                }
+            ]);
+            res.json(result);
+        }
+        catch (error) {
+            const e = JSON.stringify(error);
+            console.error(`Failed to get users ${e}`);
+        }
+    }
+
+    /**
+     * @swagger
+     *
+     * /bets/totalLost/{userId}:
+     *   get:
+     *     description: Get total lost of user bets
+     *     produces:
+     *       - application/json
+     *     parameters:
+     *       - in: path
+     *         name: userId
+     *         description: User ID
+     *         required: true
+     *         schema:
+     *           type: string
+     *     responses:
+     *       200:
+     *         response:
+     *           type: array
+     *           items:
+     *              $ref: '#/definitions/Bets'
+     */
+    async getTotalLostUserBets(req: express.Request, res: express.Response, next: express.NextFunction) {
+        const userId = req.params.userId;
+        try {
+            const result = await Bets.aggregate([
+                {
+                    $match: {
+                        userId,
+                        betResult: "Lose",
+                    }
+                }, {
+                    $group: {
+                        _id: userId,
+                        totalBet: { $sum: "$betAmount" },
+                        totalLosses: { $sum: 1 }
+                    }
+                }
+            ]);
+            res.json(result);
         }
         catch (error) {
             const e = JSON.stringify(error);
