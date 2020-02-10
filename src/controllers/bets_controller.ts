@@ -11,7 +11,7 @@ export class BetsController implements ControllerRouter {
     }
 
     initializeRoutes() {
-        this.router.get('/:userId/:streamId', this.getUserStreamBets);
+        this.router.get('/stream/:streamId', this.getStreamBets);
         this.router.get('/:userId', this.getAllUserBets);
         this.router.get('/', this.getAllBets);
         this.router.post('/', this.createBet);
@@ -46,17 +46,13 @@ export class BetsController implements ControllerRouter {
      *           items:
      *              $ref: '#/definitions/Bets'
      */
-    async getUserStreamBets(req: express.Request, res: express.Response, next: express.NextFunction) {
-        const userId: string = req.params.userId;
+    async getStreamBets(req: express.Request, res: express.Response, next: express.NextFunction) {
         const streamId: string = req.params.streamId;
         try {
-            const match = await Bets.find(
-                {
-                    userId,
-                    streamId,
-                }
-            );
-            res.json(match);
+            const query = Bets.find();
+            query.where('streamId').equals(streamId);
+            const streams = await query.exec();
+            res.json(streams);
         }
         catch (error) {
             const e = JSON.stringify(error);
