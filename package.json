@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "scripts": {
     "ng": "ng",
-    "prebuild": "npm run buildswag",
     "build": "tsc",
     "buildswag": "swagger-jsdoc -d swaggerDef.js -o dist/swagger.json",
-    "prestart": "npm run build",
+    "prestart": "npm run build && npm run buildswag",
     "start": "node dist/server.js",
     "buildAngular": "ng build",
     "startAngular": "ng serve",
