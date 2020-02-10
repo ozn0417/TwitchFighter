@@ -11,7 +11,7 @@ export class BetsController implements ControllerRouter {
     }
 
     initializeRoutes() {
-        this.router.get('/:userId/:matchId', this.getUserMatchBets);
+        this.router.get('/:userId/:streamId', this.getUserStreamBets);
         this.router.get('/:userId', this.getAllUserBets);
         this.router.get('/', this.getAllBets);
         this.router.post('/', this.createBet);
@@ -21,9 +21,9 @@ export class BetsController implements ControllerRouter {
     /**
      * @swagger
      *
-     * /bets/{userId}/{matchId}:
+     * /bets/{userId}/{streamId}:
      *   get:
-     *     description: Get all user Bets on a match
+     *     description: Get all user Bets on a stream
      *     produces:
      *       - application/json
      *     parameters:
@@ -34,8 +34,8 @@ export class BetsController implements ControllerRouter {
      *         schema:
      *           type: string
      *       - in: path
-     *         name: matchId
-     *         description: Match ID
+     *         name: streamId
+     *         description: Stream ID
      *         required: true
      *         schema:
      *           type: string
@@ -46,14 +46,14 @@ export class BetsController implements ControllerRouter {
      *           items:
      *              $ref: '#/definitions/Bets'
      */
-    async getUserMatchBets(req: express.Request, res: express.Response, next: express.NextFunction) {
+    async getUserStreamBets(req: express.Request, res: express.Response, next: express.NextFunction) {
         const userId: string = req.params.userId;
-        const matchId: string = req.params.matchId;
+        const streamId: string = req.params.streamId;
         try {
             const match = await Bets.find(
                 {
                     userId,
-                    matchId,
+                    streamId,
                 }
             );
             res.json(match);
@@ -88,10 +88,12 @@ export class BetsController implements ControllerRouter {
      */
     async getAllUserBets(req: express.Request, res: express.Response, next: express.NextFunction) {
         const userId = req.params.userId;
+        console.log(userId);
         try {
-            const bets = await Bets.find({
-
-            });
+            const query = Bets.find();
+            query.where('userId').equals(userId);
+            const bets = await query.exec();
+            res.json(bets);
         }
         catch (error) {
             const e = JSON.stringify(error);
@@ -171,13 +173,13 @@ export class BetsController implements ControllerRouter {
      *     parameters:
      *       - in: body
      *         name: user
-     *         description: User object
+     *         description: Bets object
      *         required: true
      *         schema:
-     *           $ref: '#/definitions/User'
+     *           $ref: '#/definitions/Bets'
      *       - in: path
      *         name: id
-     *         description: User ID
+     *         description: Bets ID
      *         required: true
      *         schema:
      *           type: string
@@ -185,7 +187,7 @@ export class BetsController implements ControllerRouter {
      *       200:
      *         response:
      *           schema:
-     *             $ref: '#/definitions/User'
+     *             $ref: '#/definitions/Bets'
      */
     async updateBetsResult(req: express.Request, res: express.Response, next: express.NextFunction) {
         const id: string = req.params.id;
@@ -208,13 +210,13 @@ export class BetsController implements ControllerRouter {
      *
      * /bets/{id}:
      *   delete:
-     *     description: Delete user bet id
+     *     description: Delete bet by id
      *     produces:
      *       - application/json
      *     parameters:
      *       - in: path
      *         name: id
-     *         description: User ID
+     *         description: Bet ID
      *         required: true
      *         schema:
      *           type: string
@@ -223,7 +225,7 @@ export class BetsController implements ControllerRouter {
      *         response:
      *           type: array
      *           items:
-     *              $ref: '#/definitions/User'
+     *              $ref: '#/definitions/Bets'
      */
     async deleteBet(req: express.Request, res: express.Response, next: express.NextFunction) {
         const id: string = req.params.id;

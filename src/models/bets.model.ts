@@ -29,7 +29,6 @@ import { Stream } from './stream.model';
 export interface Bets extends mongoose.Document {
     userId: User['_id']; // mongo id to string from users coll to string
     streamId: Stream['_id']; // mongo id to string from streams coll to string
-    matchId: string; // mongo id to string from match coll to string
     dateTime: Date;
     betAmount: number;
     betResult: string;
@@ -38,7 +37,6 @@ export interface Bets extends mongoose.Document {
 const BetsSchema: mongoose.Schema = new mongoose.Schema({
     userId: { type: String, required: true },
     streamId: { type: String, required: true },
-    matchId: { type: String, required: true, unique: false },
     dateTime: { type: Date, default: Date.now },
     betAmount: { type: String, required: true, unique: false },
     betResult: { type: String, required: true, unique: false },
