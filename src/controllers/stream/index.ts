@@ -1,10 +1,10 @@
 'use strict';
 import express from "express";
-const Controller = require('./stream.controller');
-
+import {getStreams,createStream,updateStream} from "../stream/stream_controller"
 let router = express.Router();
 
-router.get('/', Controller.getStream);
-router.post('/', Controller.createStream);
+router.get('/', getStreams);
+router.post('/', createStream);
+router.patch('/:id', updateStream)
 
 module.exports = router;

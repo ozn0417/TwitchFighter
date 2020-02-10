@@ -1,6 +1,6 @@
 import {Express, Request, Response, NextFunction} from 'express';
 import Stream, {Stream as StreamInterface} from './stream.model';
-
+    
     /**
      * @swagger
      *
@@ -16,13 +16,14 @@ import Stream, {Stream as StreamInterface} from './stream.model';
      *           items:
      *              $ref: '#/definitions/Stream'
      */
-    export async function getStreams(req: Request, res: Response){
+    export async function getStreams(req: any, res: any){
         try{
             const streams = await Stream.find();
-            res.json(streams);
+            return res.json(streams);
         }catch(error){
             const e = JSON.stringify(error);
             console.error(`Failed to get streams ${e}`);
+            return res.status(500).end();
         }
     }
 
@@ -49,14 +50,15 @@ import Stream, {Stream as StreamInterface} from './stream.model';
      *           items:
      *              $ref: '#/definitions/Stream'
      */
-    export async function createStream(req: express.Request, res: express.Response){
+    export async function createStream(req: any, res: any) {
         const stream: StreamInterface = req.body;
         try{
             const result: StreamInterface[] = await Stream.create([stream]);
-            res.json(result);
+            return res.json(result);
         }catch(error){
             const e = JSON.stringify(error);
             console.error(`Failed to create user ${e}`);
+            return res.status(500).end();
         }
     }
 
@@ -87,18 +89,17 @@ import Stream, {Stream as StreamInterface} from './stream.model';
      *           schema:
      *             $ref: '#/definitions/Stream'
      */
-    export async function updateStream(req: express.Request, res: express.Response, next: express.NextFunction){
+    export async function updateStream(req: any, res: any){
         const id: string = req.params.id;
-        const newInfo: StreamInterface = req.body;
         try{
-            const oldStream = await Stream.findById(id);
-
-            await oldStream.updateOne({$set: newInfo});
-
-            const newStream = await Stream.findById(id);
-            res.json(newStream);
+            const updatedStream = await Stream.findByIdAndUpdate(id,req.body,{new: true});
+            if(!updatedStream){
+                return res.status(404).end();
+            }
+            return res.json(updateStream);
         }catch(error){
             const e = JSON.stringify(error);
-            next(console.error(`Failed to update stream ${e}`));
+            console.error(`Failed to update stream ${e}`);
+            return res.status(500).end();
         }
     }

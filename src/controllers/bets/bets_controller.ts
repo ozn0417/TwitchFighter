@@ -1,23 +1,6 @@
 import * as express from 'express';
-import { ControllerRouter } from '../controller_router';
 import Bets, { Bets as BetsInterface } from './bets.model';
 
-export class BetsController implements ControllerRouter {
-    public router = express.Router();
-    public route = '/bets';
-
-    constructor() {
-        this.initializeRoutes();
-    }
-
-    initializeRoutes() {
-        this.router.get('/:userId/:matchId', this.getUserMatchBets);
-        this.router.get('/:userId', this.getAllUserBets);
-        this.router.get('/', this.getAllBets);
-        this.router.post('/', this.createBet);
-        this.router.patch('/:id', this.updateBetsResult);
-        this.router.delete('/:id', this.deleteBet)
-    }
     /**
      * @swagger
      *
@@ -46,7 +29,7 @@ export class BetsController implements ControllerRouter {
      *           items:
      *              $ref: '#/definitions/Bets'
      */
-    async getUserMatchBets(req: express.Request, res: express.Response, next: express.NextFunction) {
+    export async function getUserMatchBets(req: express.Request, res: express.Response, next: express.NextFunction) {
         const userId: string = req.params.userId;
         const matchId: string = req.params.matchId;
         try {
@@ -86,7 +69,7 @@ export class BetsController implements ControllerRouter {
      *           items:
      *              $ref: '#/definitions/Bets'
      */
-    async getAllUserBets(req: express.Request, res: express.Response, next: express.NextFunction) {
+    export async function getAllUserBets(req: express.Request, res: express.Response, next: express.NextFunction) {
         const userId = req.params.userId;
         try {
             const bets = await Bets.find({
@@ -114,7 +97,7 @@ export class BetsController implements ControllerRouter {
      *           items:
      *              $ref: '#/definitions/Bets'
      */
-    async getAllBets(req: express.Request, res: express.Response, next: express.NextFunction) {
+    export async function getAllBets(req: express.Request, res: express.Response, next: express.NextFunction) {
         try {
             const bets = await Bets.find();
             res.json(bets);
@@ -147,7 +130,7 @@ export class BetsController implements ControllerRouter {
      *           schema:
      *             $ref: '#/definitions/Bets'
      */
-    async createBet(req: express.Request, res: express.Response, next: express.NextFunction) {
+    export async function createBet(req: express.Request, res: express.Response, next: express.NextFunction) {
         const bet: BetsInterface = req.body;
         console.log(bet);
         try {
@@ -187,7 +170,7 @@ export class BetsController implements ControllerRouter {
      *           schema:
      *             $ref: '#/definitions/User'
      */
-    async updateBetsResult(req: express.Request, res: express.Response, next: express.NextFunction) {
+    export async function updateBetsResult(req: express.Request, res: express.Response, next: express.NextFunction) {
         const id: string = req.params.id;
         const newInfo: BetsInterface = req.body;
         try {
@@ -225,7 +208,7 @@ export class BetsController implements ControllerRouter {
      *           items:
      *              $ref: '#/definitions/User'
      */
-    async deleteBet(req: express.Request, res: express.Response, next: express.NextFunction) {
+    export async function deleteBet(req: express.Request, res: express.Response, next: express.NextFunction) {
         const id: string = req.params.id;
         try {
             await Bets.findByIdAndDelete(id);
@@ -236,4 +219,3 @@ export class BetsController implements ControllerRouter {
             next(console.error(`Failed to update user ${e}`));
         }
     }
-}

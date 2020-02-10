@@ -1,21 +1,6 @@
 import * as express from 'express';
-import { ControllerRouter } from '../controller_router';
 import User, { User as UserInterface } from './user.model';
 
-export class UserController implements ControllerRouter {
-    public router = express.Router();
-    public route = '/user';
-
-    constructor() {
-        this.initializeRoutes();
-    }
-
-    initializeRoutes() {
-        this.router.get('/', this.getUsers);
-        this.router.post('/', this.createUser);
-        this.router.patch('/:id', this.updateUser);
-        this.router.delete('/:id', this.deleteUser)
-    }
 
     /**
      * @swagger
@@ -32,7 +17,7 @@ export class UserController implements ControllerRouter {
      *           items:
      *              $ref: '#/definitions/User'
      */
-    async getUsers(req: express.Request, res: express.Response, next: express.NextFunction) {
+    export async function getUsers(req: express.Request, res: express.Response, next: express.NextFunction) {
         try {
             const users = await User.find();
             res.json(users);
@@ -65,7 +50,7 @@ export class UserController implements ControllerRouter {
      *           schema:
      *             $ref: '#/definitions/User'
      */
-    async createUser(req: express.Request, res: express.Response) {
+    export async function createUser(req: express.Request, res: express.Response) {
         const user: UserInterface = req.body;
         try {
             const result: UserInterface[] = await User.create([user]);
@@ -104,7 +89,7 @@ export class UserController implements ControllerRouter {
      *           schema:
      *             $ref: '#/definitions/User'
      */
-    async updateUser(req: express.Request, res: express.Response, next: express.NextFunction) {
+    export async function updateUser(req: express.Request, res: express.Response, next: express.NextFunction) {
         const id: string = req.params.id;
         const newInfo: UserInterface = req.body;
         try {
@@ -145,7 +130,7 @@ export class UserController implements ControllerRouter {
      *           items:
      *              $ref: '#/definitions/User'
      */
-    async deleteUser(req: express.Request, res: express.Response, next: express.NextFunction) {
+    export async function deleteUser(req: express.Request, res: express.Response, next: express.NextFunction) {
         const id: string = req.params.id;
         try {
             await User.findByIdAndDelete(id);
@@ -156,4 +141,4 @@ export class UserController implements ControllerRouter {
             next(console.error(`Failed to update user ${e}`));
         }
     }
-}
+
