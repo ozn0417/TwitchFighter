@@ -1,17 +1,6 @@
-import * as express from 'express';
-
-import {ControllerRouter} from '../controller_router';
-
+import {Express, Request, Response, NextFunction} from 'express';
 import Stream, {Stream as StreamInterface} from './stream.model';
 
-export class StreamController implements ControllerRouter {
-    public router = express.Router();
-    public route = '/stream';
-
-    constructor(){
-        this.router = express.Router();
-        this.route = '/stream';
-    }
     /**
      * @swagger
      *
@@ -27,7 +16,7 @@ export class StreamController implements ControllerRouter {
      *           items:
      *              $ref: '#/definitions/Stream'
      */
-    async getStreams(req: express.Request, res: express.Response){
+    export async function getStreams(req: Request, res: Response){
         try{
             const streams = await Stream.find();
             res.json(streams);
@@ -60,7 +49,7 @@ export class StreamController implements ControllerRouter {
      *           items:
      *              $ref: '#/definitions/Stream'
      */
-    async createStream(req: express.Request, res: express.Response){
+    export async function createStream(req: express.Request, res: express.Response){
         const stream: StreamInterface = req.body;
         try{
             const result: StreamInterface[] = await Stream.create([stream]);
@@ -98,7 +87,7 @@ export class StreamController implements ControllerRouter {
      *           schema:
      *             $ref: '#/definitions/Stream'
      */
-    async updateStream(req: express.Request, res: express.Response, next: express.NextFunction){
+    export async function updateStream(req: express.Request, res: express.Response, next: express.NextFunction){
         const id: string = req.params.id;
         const newInfo: StreamInterface = req.body;
         try{
@@ -113,4 +102,3 @@ export class StreamController implements ControllerRouter {
             next(console.error(`Failed to update stream ${e}`));
         }
     }
-}
