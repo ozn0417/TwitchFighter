@@ -19,11 +19,11 @@ import Stream, {Stream as StreamInterface} from './stream.model';
     export async function getStreams(req: any, res: any){
         try{
             const streams = await Stream.find();
-            return res.json(streams);
+            res.json(streams);
         }catch(error){
             const e = JSON.stringify(error);
             console.error(`Failed to get streams ${e}`);
-            return res.status(500).end();
+            res.status(500).end();
         }
     }
 
@@ -51,14 +51,13 @@ import Stream, {Stream as StreamInterface} from './stream.model';
      *              $ref: '#/definitions/Stream'
      */
     export async function createStream(req: any, res: any) {
-        const stream: StreamInterface = req.body;
         try{
-            const result: StreamInterface[] = await Stream.create([stream]);
-            return res.json(result);
+            const result = await Stream.create(req.body);
+            res.json(result);
         }catch(error){
             const e = JSON.stringify(error);
             console.error(`Failed to create user ${e}`);
-            return res.status(500).end();
+            res.status(500).end();
         }
     }
 
@@ -94,12 +93,12 @@ import Stream, {Stream as StreamInterface} from './stream.model';
         try{
             const updatedStream = await Stream.findByIdAndUpdate(id,req.body,{new: true});
             if(!updatedStream){
-                return res.status(404).end();
+                res.status(404).end();
             }
             return res.json(updateStream);
         }catch(error){
             const e = JSON.stringify(error);
             console.error(`Failed to update stream ${e}`);
-            return res.status(500).end();
+            res.status(500).end();
         }
     }

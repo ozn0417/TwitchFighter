@@ -1,5 +1,5 @@
 'use strict';
-import express from "express";
+import * as express from "express";
 import {getUserMatchBets,getAllUserBets,getAllBets,createBet,updateBetsResult,deleteBet} from "../bets/bets_controller";
 let router = express.Router();
 

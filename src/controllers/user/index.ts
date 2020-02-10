@@ -1,5 +1,5 @@
 'use strict';
-import express from "express";
+import * as express from "express";
 import {getUsers,updateUser,createUser,deleteUser} from "../user/user_controller"
 let router = express.Router();
 

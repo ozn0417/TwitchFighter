@@ -1,5 +1,5 @@
 'use strict';
-import express from "express";
+import * as express from "express";
 import {getStreams,createStream,updateStream} from "../stream/stream_controller"
 let router = express.Router();
 

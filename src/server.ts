@@ -9,6 +9,13 @@ const port = 8080; // default port to listen
 
 const mongoDbUrl = process.env.CUSTOMCONNSTR_mongoDbConnStr || 'mongodb://localhost:27017/twitchFighter';
 
+const options: mongoose.ConnectionOptions = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  autoCreate: true
+};
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -17,9 +24,7 @@ require('./routes')(app);
 
 // start the Express server
 app.listen(port, async () => {
-    const options: mongoose.ConnectionOptions = {
-      useNewUrlParser: true,
-    };
+
     await mongoose.connect(mongoDbUrl, options);
     const collections = await mongoose.connection.db.collections();
     collections.forEach(c => console.log(`Found: ${c.collectionName}`));
