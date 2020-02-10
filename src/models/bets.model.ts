@@ -18,9 +18,6 @@ import { Stream } from './stream.model';
  *       matchId:
  *         type: string
  *         example: 'b913b2-eeee-bbb3-24424-b12e47b85198'
- *       betToWin:
- *         type: string
- *         example: 'b91183-f2f6-45b3-b687f-236236236236'
  *       betAmount:
  *         type: numeric
  *         example: 23.52
@@ -34,7 +31,6 @@ export interface Bets extends mongoose.Document {
     streamId: Stream['_id']; // mongo id to string from streams coll to string
     matchId: string; // mongo id to string from match coll to string
     dateTime: Date;
-    betToWin: string;
     betAmount: number;
     betResult: string;
 }
@@ -44,7 +40,6 @@ const BetsSchema: mongoose.Schema = new mongoose.Schema({
     streamId: { type: String, required: true },
     matchId: { type: String, required: true, unique: false },
     dateTime: { type: Date, default: Date.now },
-    betToWin: { type: String, required: true, unique: false },
     betAmount: { type: String, required: true, unique: false },
     betResult: { type: String, required: true, unique: false },
 });

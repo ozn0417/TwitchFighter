@@ -16,7 +16,7 @@ export class BetsController implements ControllerRouter {
         this.router.get('/', this.getAllBets);
         this.router.post('/', this.createBet);
         this.router.patch('/:id', this.updateBetsResult);
-        this.router.delete('/:id', this.deleteBet)
+        this.router.delete('/:id', this.deleteBet);
     }
     /**
      * @swagger
