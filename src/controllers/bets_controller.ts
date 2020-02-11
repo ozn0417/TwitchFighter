@@ -11,19 +11,22 @@ export class BetsController implements ControllerRouter {
     }
 
     initializeRoutes() {
-        this.router.get('/:userId/:matchId', this.getUserMatchBets);
+        this.router.get('/stream/:streamId', this.getStreamBets);
         this.router.get('/:userId', this.getAllUserBets);
+        this.router.get('/totalStats/:userId', this.getTotalStatsUserBets);
+        this.router.get('/totalWon/:userId', this.getTotalWonUserBets);
+        this.router.get('/totalLost/:userId', this.getTotalLostUserBets);
         this.router.get('/', this.getAllBets);
         this.router.post('/', this.createBet);
         this.router.patch('/:id', this.updateBetsResult);
-        this.router.delete('/:id', this.deleteBet)
+        this.router.delete('/:id', this.deleteBet);
     }
     /**
      * @swagger
      *
-     * /bets/{userId}/{matchId}:
+     * /bets/{userId}/{streamId}:
      *   get:
-     *     description: Get all user Bets on a match
+     *     description: Get all user Bets on a stream
      *     produces:
      *       - application/json
      *     parameters:
@@ -34,8 +37,8 @@ export class BetsController implements ControllerRouter {
      *         schema:
      *           type: string
      *       - in: path
-     *         name: matchId
-     *         description: Match ID
+     *         name: streamId
+     *         description: Stream ID
      *         required: true
      *         schema:
      *           type: string
@@ -46,17 +49,13 @@ export class BetsController implements ControllerRouter {
      *           items:
      *              $ref: '#/definitions/Bets'
      */
-    async getUserMatchBets(req: express.Request, res: express.Response, next: express.NextFunction) {
-        const userId: string = req.params.userId;
-        const matchId: string = req.params.matchId;
+    async getStreamBets(req: express.Request, res: express.Response, next: express.NextFunction) {
+        const streamId: string = req.params.streamId;
         try {
-            const match = await Bets.find(
-                {
-                    userId,
-                    matchId,
-                }
-            );
-            res.json(match);
+            const query = Bets.find();
+            query.where('streamId').equals(streamId);
+            const streams = await query.exec();
+            res.json(streams);
         }
         catch (error) {
             const e = JSON.stringify(error);
@@ -89,9 +88,152 @@ export class BetsController implements ControllerRouter {
     async getAllUserBets(req: express.Request, res: express.Response, next: express.NextFunction) {
         const userId = req.params.userId;
         try {
-            const bets = await Bets.find({
+            const query = Bets.find();
+            query.where('userId').equals(userId);
+            const bets = await query.exec();
+            res.json(bets);
+        }
+        catch (error) {
+            const e = JSON.stringify(error);
+            console.error(`Failed to get users ${e}`);
+        }
+    }
 
-            });
+    /**
+     * @swagger
+     *
+     * /bets/totalStats/{userId}:
+     *   get:
+     *     description: Get sum statistics of user bets
+     *     produces:
+     *       - application/json
+     *     parameters:
+     *       - in: path
+     *         name: userId
+     *         description: User ID
+     *         required: true
+     *         schema:
+     *           type: string
+     *     responses:
+     *       200:
+     *         response:
+     *           type: array
+     *           items:
+     *              $ref: '#/definitions/Bets'
+     */
+    async getTotalStatsUserBets(req: express.Request, res: express.Response, next: express.NextFunction) {
+        const userId = req.params.userId;
+        try {
+            const result = await Bets.aggregate([
+                {
+                    $match: {
+                        userId,
+                    }
+                }, {
+                    $group: {
+                        _id: userId,
+                        totalBet: { $sum: "$betAmount" },
+                        avgBet: { $avg: "$betAmount" },
+                        minBet: { $min: "$betAmount" },
+                        maxBet: { $max: "$betAmount" }
+                    }
+                }
+            ]);
+            res.json(result);
+        }
+        catch (error) {
+            const e = JSON.stringify(error);
+            console.error(`Failed to get users ${e}`);
+        }
+    }
+
+    /**
+     * @swagger
+     *
+     * /bets/totalWon/{userId}:
+     *   get:
+     *     description: Get total winning of user bets
+     *     produces:
+     *       - application/json
+     *     parameters:
+     *       - in: path
+     *         name: userId
+     *         description: User ID
+     *         required: true
+     *         schema:
+     *           type: string
+     *     responses:
+     *       200:
+     *         response:
+     *           type: array
+     *           items:
+     *              $ref: '#/definitions/Bets'
+     */
+    async getTotalWonUserBets(req: express.Request, res: express.Response, next: express.NextFunction) {
+        const userId = req.params.userId;
+        try {
+            const result = await Bets.aggregate([
+                {
+                    $match: {
+                        userId,
+                        betResult: "Win",
+                    }
+                }, {
+                    $group: {
+                        _id: userId,
+                        totalBet: { $sum: "$betAmount" },
+                        totalWon: { $sum: 1 }
+                    }
+                }
+            ]);
+            res.json(result);
+        }
+        catch (error) {
+            const e = JSON.stringify(error);
+            console.error(`Failed to get users ${e}`);
+        }
+    }
+
+    /**
+     * @swagger
+     *
+     * /bets/totalLost/{userId}:
+     *   get:
+     *     description: Get total lost of user bets
+     *     produces:
+     *       - application/json
+     *     parameters:
+     *       - in: path
+     *         name: userId
+     *         description: User ID
+     *         required: true
+     *         schema:
+     *           type: string
+     *     responses:
+     *       200:
+     *         response:
+     *           type: array
+     *           items:
+     *              $ref: '#/definitions/Bets'
+     */
+    async getTotalLostUserBets(req: express.Request, res: express.Response, next: express.NextFunction) {
+        const userId = req.params.userId;
+        try {
+            const result = await Bets.aggregate([
+                {
+                    $match: {
+                        userId,
+                        betResult: "Lose",
+                    }
+                }, {
+                    $group: {
+                        _id: userId,
+                        totalBet: { $sum: "$betAmount" },
+                        totalLosses: { $sum: 1 }
+                    }
+                }
+            ]);
+            res.json(result);
         }
         catch (error) {
             const e = JSON.stringify(error);
@@ -171,13 +313,13 @@ export class BetsController implements ControllerRouter {
      *     parameters:
      *       - in: body
      *         name: user
-     *         description: User object
+     *         description: Bets object
      *         required: true
      *         schema:
-     *           $ref: '#/definitions/User'
+     *           $ref: '#/definitions/Bets'
      *       - in: path
      *         name: id
-     *         description: User ID
+     *         description: Bets ID
      *         required: true
      *         schema:
      *           type: string
@@ -185,7 +327,7 @@ export class BetsController implements ControllerRouter {
      *       200:
      *         response:
      *           schema:
-     *             $ref: '#/definitions/User'
+     *             $ref: '#/definitions/Bets'
      */
     async updateBetsResult(req: express.Request, res: express.Response, next: express.NextFunction) {
         const id: string = req.params.id;
@@ -208,13 +350,13 @@ export class BetsController implements ControllerRouter {
      *
      * /bets/{id}:
      *   delete:
-     *     description: Delete user bet id
+     *     description: Delete bet by id
      *     produces:
      *       - application/json
      *     parameters:
      *       - in: path
      *         name: id
-     *         description: User ID
+     *         description: Bet ID
      *         required: true
      *         schema:
      *           type: string
@@ -223,7 +365,7 @@ export class BetsController implements ControllerRouter {
      *         response:
      *           type: array
      *           items:
-     *              $ref: '#/definitions/User'
+     *              $ref: '#/definitions/Bets'
      */
     async deleteBet(req: express.Request, res: express.Response, next: express.NextFunction) {
         const id: string = req.params.id;
