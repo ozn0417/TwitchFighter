@@ -7,7 +7,7 @@
     <mat-nav-list>
       <a mat-list-item href="/home">Home</a>
       <a mat-list-item href="/streams">Streams</a>
-      <a mat-list-item href="'/leaderboard'">Leaderboard</a>
+      <a mat-list-item href="/leaderboard">Leaderboard</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -20,7 +20,7 @@
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>front-end</span>
+      <span>frontend</span>
     </mat-toolbar>
     <!-- Add Content Here -->
     <router-outlet class="main-component"></router-outlet>
