@@ -335,6 +335,34 @@
             }
           }
         }
+      },
+      "post": {
+        "description": "creates a stream object",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "streamURL",
+            "description": "Stream object",
+            "required": true,
+            "type": "string",
+            "schema": {
+              "$ref": "#/definitions/Stream"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "response": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Stream"
+              }
+            }
+          }
+        }
       }
     },
     "/user/{id}": {
