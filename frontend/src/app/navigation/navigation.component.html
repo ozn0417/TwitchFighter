@@ -3,7 +3,7 @@
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="(isHandset$ | async) === false">
-    <mat-toolbar>Menu</mat-toolbar>
+    <mat-toolbar>TwitchFighter</mat-toolbar>
     <mat-nav-list>
       <a mat-list-item href="/home">Home</a>
       <a mat-list-item href="/streams">Streams</a>
@@ -20,7 +20,11 @@
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>frontend</span>
+      <div class="tickerwrap">
+        <div class="ticker">
+          W e l c o m e &nbsp; t o &nbsp; T w i t c h &nbsp; F i g h t e r !&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;N o t &nbsp; A l l &nbsp; S t r e a m s &nbsp; A r e &nbsp; C r e a t e d &nbsp; E q u a l !
+        </div>
+      </div>
     </mat-toolbar>
     <!-- Add Content Here -->
     <router-outlet class="main-component"></router-outlet>
