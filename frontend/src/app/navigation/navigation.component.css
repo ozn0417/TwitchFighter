@@ -10,6 +10,31 @@
   background: inherit;
 }
 
+.icons {
+  max-height: 32px;
+  max-width: 32px;
+  margin-right: 12px;
+}
+.icon-row {
+  display: inline-block;
+  align-items: center;
+  font-size: 36px;
+  margin-bottom: 16px;
+}
+
+.logo {
+  font-size: 48px;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.logo-last {
+  font-size: 48px;
+  font-weight: bold;
+  font-style: italic;
+  margin-right: 8px;
+  border-bottom: 2px;
+}
 .mat-toolbar.mat-primary {
   position: sticky;
   top: 0;
