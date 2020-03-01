@@ -1,0 +1,30 @@
+.streams_containers {
+    height: 400;
+    line-height: 100px;
+    width: 80%;
+    background-color: azure;
+    color: blue;
+    vertical-align: middle;
+    text-align: start;
+    padding-left: 5%;
+    font-family: 'Lucida Sans';
+}
+
+.streams_containers_user {
+    font-size: 20px;
+    font-family: 'Cominc Sans';
+}
+
+.stream_frame {
+    align-content: flex-start;
+}
+
+.stream_header {
+    font-size: 70px;
+    vertical-align: auto;
+    height: 140px;
+    vertical-align: middle;
+    padding-left: 10px;
+    padding-top: 40px;
+    font-family: 'Luckiest Guy', ;
+}

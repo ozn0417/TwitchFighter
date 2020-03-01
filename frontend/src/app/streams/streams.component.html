@@ -1,1 +1,12 @@
-<p>streams works!</p>
+<h1 class="stream_header">Today's popular streams!</h1>
+<div></div>
+<ul class="stream">
+  <div *ngFor="let stream of streams">
+    <div class="streams_containers">
+      <div class="streams_containers_user">
+        Watch <a href="{{ stream.streamUrl }}">{{ stream.twitchUserName }}'s</a> stream!!!
+      </div>
+    </div>
+    <div style="height: 10px;"></div>
+  </div>
+</ul>

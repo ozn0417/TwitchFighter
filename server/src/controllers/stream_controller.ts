@@ -48,7 +48,7 @@ export class StreamController implements ControllerRouter {
      * @swagger
      *
      * /stream:
-     *   get:
+     *   post:
      *     description: creates a stream object
      *     produces:
      *       - application/json
@@ -72,9 +72,10 @@ export class StreamController implements ControllerRouter {
         try{
             const result: StreamInterface[] = await Stream.create([stream]);
             res.json(result);
-        }catch(error){
+        } catch(error){
             const e = JSON.stringify(error);
-            console.error(`Failed to create user ${e}`);
+            console.error(`Failed to create stream ${e}`);
+            res.status(400).json({"error": error.name, "message": error.message});
         }
     }
 
