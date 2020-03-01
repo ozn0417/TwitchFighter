@@ -10,6 +10,10 @@ export class HomeComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+      // @ts-ignore
+      twttr.widgets.load();
   }
+
+
 
 }

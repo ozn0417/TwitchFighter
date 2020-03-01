@@ -27,7 +27,7 @@ export class StreamController implements ControllerRouter {
      *           items:
      *              $ref: '#/definitions/Stream'
      */
-    async getStreams(req: express.Request, res: express.Response){
+    async getStreams(res: any){
         try{
             const streams = await Stream.find();
             res.json(streams);
@@ -60,7 +60,7 @@ export class StreamController implements ControllerRouter {
      *           items:
      *              $ref: '#/definitions/Stream'
      */
-    async createStream(req: express.Request, res: express.Response){
+    async createStream(req: any, res: any){
         const stream: StreamInterface = req.body;
         try{
             const result: StreamInterface[] = await Stream.create([stream]);
@@ -98,7 +98,7 @@ export class StreamController implements ControllerRouter {
      *           schema:
      *             $ref: '#/definitions/Stream'
      */
-    async updateStream(req: express.Request, res: express.Response, next: express.NextFunction){
+    async updateStream(req: any, res: any){
         const id: string = req.params.id;
         const newInfo: StreamInterface = req.body;
         try{
@@ -110,7 +110,7 @@ export class StreamController implements ControllerRouter {
             res.json(newStream);
         }catch(error){
             const e = JSON.stringify(error);
-            next(console.error(`Failed to update stream ${e}`));
+            console.error(`Failed to update stream ${e}`);
         }
     }
 }
