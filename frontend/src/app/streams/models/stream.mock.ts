@@ -1,4 +1,4 @@
-import { IStream} from './stream.model';
+import { IStream } from './stream.model';
 
 export const mockStreams: IStream[] = [
     {
