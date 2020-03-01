@@ -25,8 +25,9 @@ export class StreamsComponent implements OnInit {
     this.streams = mockStreams;
     this.streams.forEach(stream => {
       // stream.streamUrl = "https://player.twitch.tv/?channel=" + stream.twitchUserName;
-      console.log("stream.streamUrl is: " + `${stream.streamUrl}`)
-      stream.href = "https://www.twitch.tv/" + stream.twitchUserName + "?tt_content=text_link&tt_medium=live_embed"
+      console.log("stream.streamUrl is: " + `${stream.streamUrl}`);
+      stream.href = "https://www.twitch.tv/" + stream.twitchUserName + "?tt_content=text_link&tt_medium=live_embed";
+      console.log("stream.href is: " + `${stream.href}`);
     });
     this.streams.forEach(stream => {
       stream.safeUrl = sanitizer.bypassSecurityTrustUrl(stream.streamUrl);

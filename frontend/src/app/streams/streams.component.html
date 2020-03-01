@@ -6,6 +6,54 @@
       <div class="streams_containers_user">
         Watch <a href="{{ stream.streamUrl }}">{{ stream.twitchUserName }}'s</a> stream!!!
       </div>
+      DEBUG: streamURL is: {{ stream.streamUrl }}
+      DEBUG: href is: {{ stream.href }}
+      DEBUG: safeUrl is: {{ stream.safeUrl }}
+      DEBUG: safeHref is: {{ stream.safeHref }}
+      <div>
+        <iframe 
+          src="{{ stream.streamUrl }}" 
+          frameborder="0" 
+          allowfullscreen="false"
+          auto 
+          scrolling="no" 
+          height="30" 
+          width="45">
+        </iframe>
+      </div>
+      <div>
+        <iframe 
+          src="{{ stream.href }}" 
+          frameborder="0" 
+          allowfullscreen="false"
+          auto 
+          scrolling="no" 
+          height="30" 
+          width="45">
+        </iframe>
+      </div>
+      <div>
+        <iframe 
+          src="{{ stream.safeUrl }}" 
+          frameborder="0" 
+          allowfullscreen="false"
+          auto
+          scrolling="no" 
+          height="30" 
+          width="45">
+        </iframe>
+      </div>
+      <div>
+        <iframe 
+          src="{{ stream.safeHref }}" 
+          frameborder="0" 
+          allowfullscreen="false"
+          auto 
+          scrolling="no" 
+          height="30" 
+          width="45">
+        </iframe>
+      </div>
     </div>
     <div style="height: 10px;"></div>
   </div>
