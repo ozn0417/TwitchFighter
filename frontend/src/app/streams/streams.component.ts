@@ -26,7 +26,7 @@ export class StreamsComponent implements OnInit {
       console.log("stream.streamUrl is: " + `${stream.streamUrl}`)
     });
     this.streams.forEach(stream => {
-      // stream.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(stream.streamUrl);
+      stream.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(stream.streamUrl);
       // stream.safeUrl = this.sanitizer.sanitize(SecurityContext.URL, stream.streamUrl);
     });
   }
