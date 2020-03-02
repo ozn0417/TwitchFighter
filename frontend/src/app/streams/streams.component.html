@@ -7,6 +7,10 @@
         Watch <a href="{{ stream.streamUrl }}">{{ stream.twitchUserName }}'s</a> stream!!!
       </div>
     </div>
+    <div>
+      <iframe class="e2e-iframe-trusted-src" src="{{ stream.streamUrl }}" frameborder="0" allowfullscreen="true"
+        scrolling="no" height="90" width="110"></iframe>
+    </div>
     <div style="height: 10px;"></div>
   </div>
 </ul>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SecurityContext } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
@@ -14,7 +14,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class StreamsComponent implements OnInit {
   streams: IStream[];
-  hello: string = "howdy";
   twitch_urls: string;
 
   constructor(
@@ -24,25 +23,17 @@ export class StreamsComponent implements OnInit {
     this.sanitizer = sanitizer;
     this.streams = mockStreams;
     this.streams.forEach(stream => {
-      // stream.streamUrl = "https://player.twitch.tv/?channel=" + stream.twitchUserName;
       console.log("stream.streamUrl is: " + `${stream.streamUrl}`)
-      stream.href = "https://www.twitch.tv/" + stream.twitchUserName + "?tt_content=text_link&tt_medium=live_embed"
     });
     this.streams.forEach(stream => {
-      stream.safeUrl = sanitizer.bypassSecurityTrustUrl(stream.streamUrl);
-      stream.safeHref = sanitizer.bypassSecurityTrustUrl(stream.href);
+      // stream.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(stream.streamUrl);
+      // stream.safeUrl = this.sanitizer.sanitize(SecurityContext.URL, stream.streamUrl);
     });
   }
 
   async ngOnInit() {
-    // console.log("logging to console: hello");
-    // this.streamService.getStreams()
-    //   .then(streams => this.streams = streams)
   }
 
-  // sanitizeUrl() {
-    // return this.sanitizer.bypassSecurityTrustUrl(this.stream.streamUrl);
-  // }
 }
 
 
