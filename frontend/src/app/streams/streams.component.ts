@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SecurityContext } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { IStream } from 'src/app/streams/models/stream.model'
 import { mockStreams } from 'src/app/streams/models/stream.mock'
 import { Injectable } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-streams',
@@ -14,37 +14,24 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class StreamsComponent implements OnInit {
   streams: IStream[];
-  hello: string = "howdy";
-  twitch_urls: string;
 
   constructor(
-    // private streamService: StreamService
     private sanitizer: DomSanitizer
   ) { 
     this.sanitizer = sanitizer;
     this.streams = mockStreams;
-    this.streams.forEach(stream => {
-      // stream.streamUrl = "https://player.twitch.tv/?channel=" + stream.twitchUserName;
-      console.log("stream.streamUrl is: " + `${stream.streamUrl}`)
-      stream.href = "https://www.twitch.tv/" + stream.twitchUserName + "?tt_content=text_link&tt_medium=live_embed"
-    });
-    this.streams.forEach(stream => {
-      stream.safeUrl = sanitizer.bypassSecurityTrustUrl(stream.streamUrl);
-      stream.safeHref = sanitizer.bypassSecurityTrustUrl(stream.href);
-    });
   }
 
   async ngOnInit() {
-    // console.log("logging to console: hello");
-    // this.streamService.getStreams()
-    //   .then(streams => this.streams = streams)
+    this.streams.forEach(stream => {
+      stream.href = "https://www.twitch.tv/" + stream.twitchUserName;
+      stream.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(stream.streamUrl);
+      stream.safeHref = this.sanitizer.bypassSecurityTrustResourceUrl(stream.href);
+      console.log("Url " + stream.streamUrl + " -- safe url: " + stream.safeUrl);
+      console.log("href of " + stream.href + " -- safe url: " + stream.safeHref);
+    });
   }
-
-  // sanitizeUrl() {
-    // return this.sanitizer.bypassSecurityTrustUrl(this.stream.streamUrl);
-  // }
 }
-
 
 @Injectable({
   providedIn: 'root'
@@ -64,5 +51,4 @@ export class StreamService {
       return Promise.resolve([]);
     }
   }
-
 }
