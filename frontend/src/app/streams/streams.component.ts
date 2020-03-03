@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { IStream } from 'src/app/streams/models/stream.model'
 import { mockStreams } from 'src/app/streams/models/stream.mock'
 import { Injectable } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-streams',
@@ -14,28 +14,24 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class StreamsComponent implements OnInit {
   streams: IStream[];
-  twitch_urls: string;
 
   constructor(
-    // private streamService: StreamService
     private sanitizer: DomSanitizer
   ) { 
     this.sanitizer = sanitizer;
     this.streams = mockStreams;
-    this.streams.forEach(stream => {
-      console.log("stream.streamUrl is: " + `${stream.streamUrl}`)
-    });
-    this.streams.forEach(stream => {
-      stream.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(stream.streamUrl);
-      // stream.safeUrl = this.sanitizer.sanitize(SecurityContext.URL, stream.streamUrl);
-    });
   }
 
   async ngOnInit() {
+    this.streams.forEach(stream => {
+      stream.href = "https://www.twitch.tv/" + stream.twitchUserName;
+      stream.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(stream.streamUrl);
+      stream.safeHref = this.sanitizer.bypassSecurityTrustResourceUrl(stream.href);
+      console.log("Url " + stream.streamUrl + " -- safe url: " + stream.safeUrl);
+      console.log("href of " + stream.href + " -- safe url: " + stream.safeHref);
+    });
   }
-
 }
-
 
 @Injectable({
   providedIn: 'root'
@@ -55,5 +51,4 @@ export class StreamService {
       return Promise.resolve([]);
     }
   }
-
 }
