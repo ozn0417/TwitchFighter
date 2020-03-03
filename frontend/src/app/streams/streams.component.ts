@@ -40,10 +40,6 @@ export class StreamsComponent implements OnInit {
     // this.streamService.getStreams()
     //   .then(streams => this.streams = streams)
   }
-
-  // sanitizeUrl() {
-    // return this.sanitizer.bypassSecurityTrustUrl(this.stream.streamUrl);
-  // }
 }
 
 
