@@ -7,7 +7,7 @@ import { StoreComponent } from './store/store.component';
 import { UserComponent } from './user/user.component';
 
 
-const routes: Routes = [
+export const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'streams', component: StreamsComponent },
   { path: 'leaderboard', component: LeaderboardComponent },

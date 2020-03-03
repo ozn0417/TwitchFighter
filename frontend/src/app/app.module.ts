@@ -18,6 +18,9 @@ import { MatListModule } from '@angular/material/list';
 import { StoreComponent } from './store/store.component';
 import { UserComponent } from './user/user.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { RouterModule } from '@angular/router'
+
+import { routes } from '../app/app-routing.module'
 
 @NgModule({
   declarations: [
@@ -37,6 +40,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatToolbarModule,
     MatTableModule,
     MatFormFieldModule,
+    RouterModule.forRoot(routes),
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,

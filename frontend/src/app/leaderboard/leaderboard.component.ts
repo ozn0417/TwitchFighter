@@ -12,9 +12,13 @@ export class LeaderboardComponent {
   constructor(private router: Router) { }
 
   linkToUser(row){
+    console.log("username is:",row.name);
     this.router.navigate(['/user',row.name])
   }
+  
 }
+
+
 
 export interface User{
   rank: number,

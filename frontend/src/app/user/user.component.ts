@@ -8,18 +8,10 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class UserComponent implements OnInit {
 
-  constructor(private activatedRoute: ActivatedRoute) {
+  constructor() {
    }
   username: string;
-  private sub: any;
   ngOnInit() {
-    this.sub = this.activatedRoute.paramMap.subscribe(params => {
-    this.username = 'Daigo'
-    console.log(params);
-    });
-    }
-    
-    ngOnDestroy() {
-    this.sub.unsubscribe();
-    }
+    this.username ='Daigo'
+    };
 }
