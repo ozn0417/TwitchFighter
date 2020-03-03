@@ -1,3 +1,7 @@
+.streams_main {
+    align-items: right;
+}
+
 .stream_header {
     font-size: 60px;
     padding-top: 3%;
@@ -12,11 +16,13 @@
     color: white;
     text-align: start;
     background-color: gray;
+    align-items: center;
 }
 
 .streams_containers_user {
     font-size: 30px;
     padding-left: 5%;
+    text-indent: 5%;
     border: 5px;
     border-color: white;
     background-color: rbg(170, 170, 170);
@@ -27,6 +33,7 @@
     padding-bottom: 1%;
     padding-left: 7%;
     height: 100%;
+    width: 80%;
     background-color: rbg(170, 170, 170);
 }
 

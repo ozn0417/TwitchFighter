@@ -1,18 +1,25 @@
 <h1 class="stream_header">Today's popular streams!</h1>
-<div></div>
-<ul class="stream">
-  <div *ngFor="let stream of streams">
-    <div class="streams_containers">
-      <div class="streams_containers_user">
-        <a [href]="stream.safeHref" color>Watch {{ stream.twitchUserName }}'s stream!!! </a>
+<div class="streams_containers_user">
+  <ul class="stream">
+    <div *ngFor="let stream of streams">
+      <div class="streams_containers">
+        <div>
+          <a [href]="stream.safeHref" color>Watch {{ stream.twitchUserName }}'s stream!!! </a>
+        </div>
+        <div>
+          <iframe 
+            class="stream_video" 
+            [src]="stream.safeUrl" 
+            frameborder="0" 
+            allowfullscreen="true" 
+            scrolling="no"
+            height="500"
+            width="400"></iframe>
+        </div>
       </div>
-      <div>
-        <iframe class="stream_video" [src]="stream.safeUrl" frameborder="0" allowfullscreen="true"
-          scrolling="no" height="500" width="400"></iframe>
+      <div class="empty_content">
+
       </div>
     </div>
-    <div class="empty_content">
-      
-    </div>
-  </div>
-</ul>
+  </ul>
+</div>
